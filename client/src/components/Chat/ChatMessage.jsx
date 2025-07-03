@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { Bot, User, Heart, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
+import DOMPurify from 'dompurify';
 
 const ChatMessage = ({ message }) => {
+  const [feedback, setFeedback] = useState(null);
+
   const isAI = message.type === 'ai';
   const isUser = message.type === 'user';
+  const isWelcome = message.isWelcome;
 
   const getMessageIcon = () => {
     if (isAI) {
-      if (message.isWelcome) return <Heart className="w-5 h-5 text-primary-600" />;
+      if (isWelcome) return <Heart className="w-5 h-5 text-primary-600" />;
       return <Bot className="w-5 h-5 text-primary-600" />;
     }
     return <User className="w-5 h-5 text-neutral-600" />;
@@ -31,8 +35,26 @@ const ChatMessage = ({ message }) => {
     }
   };
 
+  const formatResponse = (text) => {
+    // Remove the ```html and ``` markers
+    const cleanHtml = text.replace(/```html|```/g, '');
+    
+    // Sanitize the HTML content
+    const sanitizedHtml = DOMPurify.sanitize(cleanHtml, {
+      ALLOWED_TAGS: ['h3', 'h4', 'p', 'ul', 'li', 'div', 'span', 'br', 'details', 'summary', 'emoji'],
+      ALLOWED_ATTR: ['class']
+    });
+
+    return sanitizedHtml;
+  };
+
+  const handleFeedback = (type) => {
+    setFeedback(type);
+    // Here you can add logic to send feedback to your backend
+  };
+
   const renderContent = () => {
-    if (message.isWelcome) {
+    if (isWelcome) {
       return (
         <div className="space-y-3">
           <div className="flex items-center space-x-2">
@@ -67,9 +89,10 @@ const ChatMessage = ({ message }) => {
 
     // Regular message content
     return (
-      <div className="prose prose-sm max-w-none">
-        {message.content}
-      </div>
+      <div 
+        className="text-sm"
+        dangerouslySetInnerHTML={{ __html: formatResponse(message.content) }}
+      />
     );
   };
 
@@ -98,6 +121,26 @@ const ChatMessage = ({ message }) => {
           <span className={`text-xs text-neutral-500 ${isUser ? 'text-right' : 'text-left'}`}>
             {formatTimestamp(message.timestamp)}
           </span>
+
+          {/* Feedback Buttons — only show for AI messages that aren't welcome messages */}
+          {isAI && !message.isWelcome && (
+            <div className="feedback flex space-x-2 mt-1">
+              <button 
+                className={`feedback-button text-sm ${feedback === 'like' ? 'text-green-600 font-bold' : 'text-neutral-500'}`}
+                onClick={() => handleFeedback('like')}
+                aria-label="Like response"
+              >
+                👍
+              </button>
+              <button 
+                className={`feedback-button text-sm ${feedback === 'dislike' ? 'text-red-600 font-bold' : 'text-neutral-500'}`}
+                onClick={() => handleFeedback('dislike')}
+                aria-label="Dislike response"
+              >
+                👎
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

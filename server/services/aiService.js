@@ -1,52 +1,107 @@
-const OpenAI = require('openai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const logger = require('../utils/logger');
 
 class AIService {
   constructor() {
-    // Only initialize OpenAI if API key is available
-    if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your-openai-api-key-here') {
-      this.openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
+    // Initialize Gemini if API key is available
+    if (process.env.GOOGLE_API_KEY) {
+      this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+      this.model = this.genAI.getGenerativeModel({ 
+        model: "gemini-2.0-flash",
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 2048,
+        },
       });
       this.isAvailable = true;
     } else {
       this.isAvailable = false;
-      console.log('OpenAI API key not configured. AI features will be limited.');
+      console.log('Google API key not configured. AI features will be limited.');
     }
     
-    // Cancer-specific system prompts
-    this.cancerContext = `
-      You are a compassionate AI health assistant specifically designed to support cancer patients. 
+    // Health assistant system prompts
+    this.healthContext = `
+      You are a compassionate AI health assistant specifically designed to support patients. 
       Your role is to provide helpful, accurate, and supportive information while always encouraging 
       patients to consult with their healthcare providers for medical decisions.
       
       Key principles:
       - Always prioritize patient safety and well-being
-      - Provide evidence-based information about cancer treatments and symptoms
+      - Provide evidence-based information about treatments and symptoms
       - Offer emotional support and coping strategies
       - Encourage regular communication with healthcare providers
       - Never make definitive medical diagnoses
       - Always recommend consulting healthcare professionals for medical decisions
       - Be empathetic and understanding of the patient's journey
+
+      Format your responses using this HTML structure:
       
-      Cancer types you can provide information about:
-      - Breast cancer
-      - Lung cancer
-      - Prostate cancer
-      - Colorectal cancer
-      - Leukemia
-      - Lymphoma
-      - And other common cancer types
-      
-      Treatment modalities you can discuss:
-      - Chemotherapy
-      - Radiation therapy
-      - Surgery
-      - Immunotherapy
-      - Targeted therapy
-      - Hormone therapy
-      - Stem cell transplantation
-      
-      Always remind patients that you are an AI assistant and cannot replace professional medical care.
+      <div class="response-container">
+        <h3>[Main Topic]</h3>
+        <p>[Opening paragraph with empathetic acknowledgment]</p>
+        
+        <div class="key-points">
+          <h4>Key Points to Consider:</h4>
+          <ul>
+            <li>[Point 1]</li>
+            <li>[Point 2]</li>
+          </ul>
+        </div>
+        
+        <div class="explanation">
+          <p>[Detailed explanation paragraph]</p>
+        </div>
+        
+        <div class="alert">
+          [Important warning or medical disclaimer]
+        </div>
+        
+        <div class="tips">
+          <h4>Helpful Tips:</h4>
+          <ul>
+            <li>[Tip 1]</li>
+            <li>[Tip 2]</li>
+          </ul>
+        </div>
+        
+        <p class="conclusion">[Supportive closing statement]</p>
+      </div>
+
+      Example:
+      <div class="response-container">
+        <h3>Understanding Calories in Ice Cream</h3>
+        <p>I understand you're curious about the calorie content of ice cream. That's a great question! It's important to be mindful of what we're eating, especially if we're trying to manage our weight or overall health.</p>
+        
+        <div class="key-points">
+          <h4>Factors Affecting Calorie Content:</h4>
+          <ul>
+            <li>Flavor: Richer flavors like chocolate fudge have more calories than simpler ones</li>
+            <li>Ingredients: Whole milk vs. skim milk options</li>
+            <li>Serving Size: Often smaller than what people typically eat</li>
+            <li>Brand: Different recipes lead to varying calorie counts</li>
+          </ul>
+        </div>
+        
+        <div class="explanation">
+          <p>Generally speaking, a 1/2 cup (about 64 grams) serving of regular ice cream can range from approximately 130 to over 300 calories. Lower-fat or "light" ice creams will have fewer calories, while premium or super-premium ice creams will have more.</p>
+        </div>
+        
+        <div class="alert">
+          Always consult with your healthcare provider or a registered dietitian for personalized dietary advice.
+        </div>
+        
+        <div class="tips">
+          <h4>Helpful Tips:</h4>
+          <ul>
+            <li>Read the Label: Check nutrition facts for accurate information</li>
+            <li>Portion Control: Measure servings instead of eating from the container</li>
+            <li>Consider Alternatives: Try lower-fat options or frozen yogurt</li>
+            <li>Enjoy in Moderation: Part of a balanced diet</li>
+          </ul>
+        </div>
+        
+        <p class="conclusion">I hope this information helps! Remember, I'm here to support you with information, but always discuss specific dietary needs with your healthcare provider.</p>
+      </div>
     `;
   }
 
@@ -57,41 +112,33 @@ class AIService {
         return this.getFallbackResponse(userMessage, patientContext);
       }
 
-      // Cache functionality removed for simplicity
-      // const cacheKey = `ai_response:${Buffer.from(userMessage).toString('base64')}`;
-      // const cachedResponse = await getCache(cacheKey);
-      // if (cachedResponse) {
-      //   console.log('AI response served from cache');
-      //   return cachedResponse;
-      // }
+      const prompt = {
+        contents: [{
+          parts: [{
+            text: `${this.healthContext}
 
-      const messages = [
-        {
-          role: 'system',
-          content: this.cancerContext
-        },
-        {
-          role: 'user',
-          content: this.buildContextualMessage(userMessage, patientContext)
-        }
-      ];
+User context:
+${this.buildContextualMessage(userMessage, patientContext)}
 
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4',
-        messages,
-        max_tokens: 1000,
-        temperature: 0.7,
-        presence_penalty: 0.1,
-        frequency_penalty: 0.1
-      });
+User message: ${userMessage}
 
-      const aiResponse = response.choices[0].message.content;
+Please provide a helpful and empathetic response using the HTML formatting specified above for better readability:`
+          }]
+        }]
+      };
+
+      const result = await this.model.generateContent(prompt);
+      let text = result.response.text();
       
-      // Cache functionality removed for simplicity
-      // await setCache(cacheKey, aiResponse, 3600);
+      // Remove any markdown formatting that might have slipped through
+      text = text.replace(/\*\*/g, '')
+                 .replace(/__/g, '')
+                 .replace(/##/g, '')
+                 .replace(/\*(?!\*)/g, '')
+                 .replace(/_(?!_)/g, '');
       
       console.log('AI response generated successfully');
-      return aiResponse;
+      return text;
     } catch (error) {
       console.error('Error generating AI response:', error);
       return this.getFallbackResponse(userMessage, patientContext);
@@ -103,56 +150,82 @@ class AIService {
     
     // Simple keyword-based responses when AI is not available
     if (lowerMessage.includes('symptom') || lowerMessage.includes('pain') || lowerMessage.includes('feel')) {
-      return `I understand you're experiencing symptoms. While I can't provide specific medical advice, I recommend:
-      
-1. Monitor your symptoms closely
-2. Contact your healthcare provider if symptoms worsen
-3. Keep a symptom diary to share with your medical team
-4. Don't hesitate to seek emergency care for severe symptoms
+      return `
+<h3>Symptom Management Guidance</h3>
+<p>I understand you're experiencing symptoms. While I can't provide specific medical advice, here are some general recommendations:</p>
 
-Remember: I'm here to support you, but always consult with your healthcare providers for medical decisions.`;
+<ul>
+  <li>Monitor your symptoms closely</li>
+  <li>Contact your healthcare provider if symptoms worsen</li>
+  <li>Keep a symptom diary to share with your medical team</li>
+  <li>Don't hesitate to seek emergency care for severe symptoms</li>
+</ul>
+
+<div class="alert">
+Remember: I'm here to support you, but always consult with your healthcare providers for medical decisions.
+</div>`;
     }
     
     if (lowerMessage.includes('treatment') || lowerMessage.includes('therapy') || lowerMessage.includes('medication')) {
-      return `Regarding your treatment questions, I recommend:
+      return `
+<h3>Treatment Discussion Guidelines</h3>
+<p>Regarding your treatment questions, here are some important recommendations:</p>
 
-1. Discuss all treatment options with your oncologist
-2. Ask about potential side effects and how to manage them
-3. Follow your treatment plan as prescribed
-4. Keep track of any side effects you experience
-5. Don't hesitate to ask questions during appointments
+<ul>
+  <li>Discuss all treatment options with your healthcare provider</li>
+  <li>Ask about potential side effects and how to manage them</li>
+  <li>Follow your treatment plan as prescribed</li>
+  <li>Keep track of any side effects you experience</li>
+  <li>Don't hesitate to ask questions during appointments</li>
+</ul>
 
-Your healthcare team is the best source for treatment-specific guidance.`;
+<div class="tip">
+Your healthcare team is the best source for treatment-specific guidance.
+</div>`;
     }
     
     if (lowerMessage.includes('appointment') || lowerMessage.includes('doctor') || lowerMessage.includes('visit')) {
-      return `For your upcoming appointment, I suggest:
+      return `
+<h3>Preparing for Your Appointment</h3>
+<p>To make the most of your upcoming appointment, here are some helpful suggestions:</p>
 
-1. Write down your questions beforehand
-2. Bring a list of current symptoms
-3. Have your medication list ready
-4. Consider bringing a family member or friend
-5. Don't be afraid to ask for clarification
+<ul>
+  <li>Write down your questions beforehand</li>
+  <li>Bring a list of current symptoms</li>
+  <li>Have your medication list ready</li>
+  <li>Consider bringing a family member or friend</li>
+  <li>Don't be afraid to ask for clarification</li>
+</ul>
 
-Preparation helps make the most of your time with your healthcare provider.`;
+<div class="tip">
+Good preparation helps make the most of your time with your healthcare provider.
+</div>`;
     }
     
-    return `Thank you for reaching out. I'm here to support you on your health journey. 
+    return `
+<h3>Health Support Message</h3>
+<p>Thank you for reaching out. I'm here to support you on your health journey.</p>
 
+<div class="tip">
 For the best medical guidance, please:
-- Consult with your healthcare providers
-- Keep them informed about any changes in your condition
-- Don't hesitate to ask questions during appointments
-- Trust your instincts - if something doesn't feel right, contact your medical team
+<ul>
+  <li>Consult with your healthcare providers</li>
+  <li>Keep them informed about any changes in your condition</li>
+  <li>Don't hesitate to ask questions during appointments</li>
+  <li>Trust your instincts - if something doesn't feel right, contact your medical team</li>
+</ul>
+</div>
 
-I'm here to listen and support you, but your healthcare providers are your best resource for medical decisions.`;
+<div class="alert">
+I'm here to listen and support you, but your healthcare providers are your best resource for medical decisions.
+</div>`;
   }
 
   buildContextualMessage(userMessage, patientContext) {
     let contextualMessage = userMessage;
     
-    if (patientContext.cancerType) {
-      contextualMessage += `\n\nPatient has been diagnosed with ${patientContext.cancerType}.`;
+    if (patientContext.condition) {
+      contextualMessage += `\n\nPatient has been diagnosed with ${patientContext.condition}.`;
     }
     
     if (patientContext.treatmentStage) {
@@ -174,7 +247,7 @@ I'm here to listen and support you, but your healthcare providers are your best 
     try {
       const symptomAnalysis = await this.generateResponse(
         `Please analyze these symptoms and provide guidance: ${symptoms.join(', ')}. 
-         Consider the patient's cancer type (${patientContext.cancerType || 'not specified'}) 
+         Consider the patient's condition (${patientContext.condition || 'not specified'}) 
          and current treatments (${patientContext.currentTreatments?.join(', ') || 'none specified'}). 
          Provide severity assessment and recommendations for when to contact healthcare providers.`,
         patientContext

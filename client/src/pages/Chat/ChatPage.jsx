@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Bot, 
-  AlertTriangle
+  AlertTriangle,
+  ArrowLeft
 } from 'lucide-react';
 
 import ChatMessage from '@components/Chat/ChatMessage';
@@ -20,6 +22,7 @@ const ChatPage = () => {
   const { addNotification } = useNotifications();
   const messagesEndRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
+  const navigate = useNavigate();
 
   const {
     messages,
@@ -116,6 +119,13 @@ Remember, I'm here to support you, but always consult with your healthcare team 
           </div>
           
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="btn btn-secondary btn-sm flex items-center space-x-1"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Dashboard</span>
+            </button>
             <button
               onClick={clearMessages}
               className="btn btn-secondary btn-sm"
