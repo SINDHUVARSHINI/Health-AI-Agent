@@ -144,7 +144,7 @@ const Layout = ({ children }) => {
       </AnimatePresence>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="">
         {/* Header */}
         <header className="bg-white shadow-sm border-b border-neutral-200">
           <div className="flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -218,7 +218,9 @@ const Layout = ({ children }) => {
 
         {/* Page content */}
         <main className="p-4 sm:p-6 lg:p-8">
-          {children}
+          <div className="max-w-[1200px] mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>
