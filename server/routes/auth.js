@@ -6,6 +6,11 @@ const { ObjectId } = mongoose.Types;
 
 const router = express.Router();
 
+// Helper function to get the Registration database
+const getRegistrationDb = () => {
+  return mongoose.connection.client.db('Registration');
+};
+
 // Register endpoint
 router.post('/register', async (req, res) => {
   try {
@@ -17,7 +22,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Get the Registration database and User_Registration collection
-    const db = mongoose.connection.db;
+    const db = getRegistrationDb();
     const userCollection = db.collection('User_Registration');
 
     // Check if user already exists
@@ -76,7 +81,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Get the Registration database and User_Registration collection
-    const db = mongoose.connection.db;
+    const db = getRegistrationDb();
     const userCollection = db.collection('User_Registration');
 
     // Find user
@@ -132,7 +137,7 @@ router.get('/me', async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
     
     // Get user from database
-    const db = mongoose.connection.db;
+    const db = getRegistrationDb();
     const userCollection = db.collection('User_Registration');
     const user = await userCollection.findOne({ 
       _id: ObjectId.createFromHexString(decoded.userId.toString()) 
