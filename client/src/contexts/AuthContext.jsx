@@ -148,7 +148,7 @@ export const AuthProvider = ({ children }) => {
         payload: { user: newUser, token, isNewUser: true }
       });
       
-      addNotification('success', `Welcome to Health AI, ${newUser.name}! Your account has been created successfully.`);
+      addNotification('success', `Welcome to RAVUS AI, ${newUser.name}! Your account has been created successfully.`);
       
       return newUser;
     } catch (error) {

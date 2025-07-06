@@ -1,61 +1,207 @@
-# Health-AI-Agent for Cancer Patients
+# RAVUS AI - Your Intelligent Health Assistant
 
-A comprehensive AI-powered health assistant designed specifically to support cancer patients throughout their treatment journey.
+<div align="center">
+  <h3>AI-Powered Healthcare Support System</h3>
+  <p>Empowering cancer patients with intelligent health monitoring and personalized care assistance</p>
+</div>
 
-## Features
+## 📖 Table of Contents
+- [Demo Video](#-demo-video)
+- [User Authentication](#-user-authentication)
+- [Features Overview](#-features-overview)
+- [How It Works](#-how-it-works)
+- [Technical Architecture](#-technical-architecture)
+- [Installation Guide](#-installation-guide)
+- [Usage Examples](#-usage-examples)
+- [Security & Privacy](#-security--privacy)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-### 🤖 AI-Powered Assistance
-- **Personalized Health Guidance**: Tailored recommendations based on cancer type, treatment stage, and individual health profile
-- **Symptom Tracking & Analysis**: Monitor symptoms, side effects, and treatment responses
-- **Medication Management**: Reminders, interactions checking, and dosage tracking
-- **Treatment Education**: Comprehensive information about different cancer treatments and what to expect
+## 🎥 Demo Video
 
-### 📱 Patient Support
-- **24/7 Chat Support**: Always-available AI assistant for questions and concerns
-- **Appointment Management**: Schedule tracking, preparation reminders, and follow-up coordination
-- **Nutrition Guidance**: Diet recommendations for cancer patients and treatment-specific meal plans
-- **Mental Health Support**: Stress management, coping strategies, and emotional well-being resources
+### Watch Our Demo on YouTube
+<div align="center">
+  <a href="https://youtu.be/2raj8vfQYPA">
+    <img src="https://img.youtube.com/vi/2raj8vfQYPA/maxresdefault.jpg" width="600" alt="RAVUS AI Demo"/>
+  </a>
+  <p><em>Click to watch the full demo video on YouTube</em></p>
+</div>
 
-### 🏥 Healthcare Integration
-- **Medical Record Integration**: Secure connection to patient health records
-- **Care Team Communication**: Facilitate communication between patients and healthcare providers
-- **Treatment Progress Tracking**: Monitor treatment effectiveness and recovery milestones
-- **Emergency Alerts**: Immediate notification system for concerning symptoms
+## 🔐 User Authentication
 
-### 📊 Analytics & Insights
-- **Health Dashboard**: Visual representation of health metrics and trends
-- **Treatment Effectiveness**: Data-driven insights on treatment progress
-- **Quality of Life Metrics**: Track overall well-being and daily functioning
-- **Predictive Analytics**: Early warning systems for potential complications
+### Secure Sign-In Process
+<div align="center">
+  <img src="docs/images/screenshots/signin.png" width="600" alt="RAVUS AI Sign In"/>
+  <p><em>Clean and secure authentication interface</em></p>
+</div>
 
-## Technology Stack
+Our authentication system prioritizes both security and user experience:
 
-- **Frontend**: React.js with TypeScript
-- **Backend**: Node.js with Express
-- **AI/ML**: OpenAI GPT-4, TensorFlow for health predictions
-- **Database**: PostgreSQL for patient data, Redis for caching
-- **Security**: HIPAA-compliant encryption and authentication
-- **Mobile**: React Native for cross-platform mobile app
+- **Simple Sign-In**: Clean interface for quick and easy access
+- **Secure Authentication**: Industry-standard encryption for user credentials
+- **Account Management**: Easy account creation and recovery options
+- **Session Handling**: Secure token-based authentication system
 
-## Getting Started
+### Security Features
+- Password encryption using bcrypt
+- JWT (JSON Web Token) for secure sessions
+- Rate limiting to prevent brute force attacks
+- Automatic session timeout for security
+- Two-factor authentication support (optional)
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Set up environment variables
-4. Run the development server: `npm run dev`
+## 🌟 Features Overview
 
-## Privacy & Security
+### Dashboard & Health Overview
+<div align="center">
+  <img src="docs/images/screenshots/dashboard.png" width="800" alt="RAVUS AI Dashboard"/>
+  <p><em>Comprehensive health dashboard with quick actions and real-time metrics</em></p>
+</div>
 
-This application is designed with patient privacy as the highest priority:
-- HIPAA-compliant data handling
-- End-to-end encryption
-- Secure authentication and authorization
-- Regular security audits and updates
+#### Quick Actions
+- **Chat with AI**: Get personalized health guidance instantly
+- **Log Symptoms**: Track how you're feeling with easy symptom logging
+- **Add Medication**: Update and manage your medication list
+- **Schedule Appointment**: Book and manage your medical appointments
 
-## Contributing
+#### Health Metrics at a Glance
+- **Pain Level Monitoring**: Track pain on a 1-10 scale
+- **Fatigue Assessment**: Monitor energy levels and fatigue
+- **Mood Tracking**: Keep track of emotional well-being
+- **Weight Management**: Monitor weight changes over time
 
-We welcome contributions from healthcare professionals, developers, and cancer survivors to improve the platform.
+#### Smart Features
+- **Recent Symptoms Log**: Chronological tracking of reported symptoms
+- **Upcoming Appointments**: Clear overview of scheduled medical visits
+- **Health Status**: Real-time health metrics with trend indicators
+- **Notification Center**: Important alerts and reminders
 
-## License
+#### Dynamic Updates
+- **Real-time Data**: Live updates of health metrics
+- **Trend Analysis**: Visual indicators for health patterns
+- **Appointment Management**: Upcoming medical visits with doctor details
+- **Symptom Severity**: Color-coded severity indicators for quick assessment
 
-MIT License - see LICENSE file for details
+### AI Health Assistant
+<div align="center">
+  <img src="docs/images/screenshots/ai-chat.png" width="600" alt="AI Chat Interface"/>
+  <p><em>Intelligent conversation interface for health guidance and support</em></p>
+</div>
+
+- **24/7 Health Support**: Get immediate responses to health concerns
+- **Personalized Guidance**: AI adapts to your specific cancer type and treatment
+- **Emergency Detection**: Automatic identification of urgent situations
+- **Treatment Information**: Comprehensive explanations of procedures and medications
+
+### Symptom Tracking
+<div align="center">
+  <img src="docs/images/screenshots/symptom-tracking.png" width="600" alt="Symptom Tracking"/>
+  <p><em>Detailed symptom monitoring and analysis dashboard</em></p>
+</div>
+
+- **Real-time Logging**: Easy-to-use interface for recording symptoms
+- **Pattern Recognition**: AI-powered analysis of symptom patterns
+- **Severity Tracking**: Visual representation of symptom progression
+- **Report Generation**: Shareable reports for healthcare providers
+
+### Health Metrics Dashboard
+<div align="center">
+  <img src="docs/images/screenshots/health-metrics.png" width="600" alt="Health Metrics"/>
+  <p><em>Comprehensive health data visualization</em></p>
+</div>
+
+- **Vital Statistics**: Track important health indicators
+- **Treatment Progress**: Monitor therapy effectiveness
+- **Medication Adherence**: Track medication schedules and compliance
+- **Custom Metrics**: Personalized tracking of relevant health factors
+
+## 🔄 How It Works
+
+### 1. User Onboarding
+<div align="center">
+  <img src="docs/images/screenshots/onboarding.png" width="600" alt="Onboarding Process"/>
+  <p><em>Simple and secure account creation and profile setup</em></p>
+</div>
+
+1. Create secure account
+2. Complete health profile
+3. Set up emergency contacts
+4. Configure notification preferences
+
+### 2. Daily Health Monitoring
+<div align="center">
+  <img src="docs/images/screenshots/daily-monitoring.png" width="600" alt="Daily Monitoring"/>
+  <p><em>Daily health tracking and AI analysis</em></p>
+</div>
+
+1. Log daily symptoms
+2. Record medication intake
+3. Track side effects
+4. Monitor vital signs
+
+### 3. AI Analysis & Support
+<div align="center">
+  <img src="docs/images/screenshots/ai-analysis.png" width="600" alt="AI Analysis"/>
+  <p><em>Advanced AI processing of health data</em></p>
+</div>
+
+1. Pattern recognition in symptoms
+2. Predictive health alerts
+3. Treatment effectiveness analysis
+4. Personalized recommendations
+
+## 🔧 Technical Architecture
+
+### Tech Stack
+- **Frontend**: 
+  - React.js with TypeScript
+  - TailwindCSS for styling
+  - Framer Motion for animations
+  - React Query for state management
+
+- **Backend**:
+  - Node.js with Express
+  - PostgreSQL database
+  - Redis for caching
+  - JWT authentication
+
+- **AI/ML**:
+  - OpenAI GPT-4 for natural language processing
+  - TensorFlow for health predictions
+  - Custom ML models for symptom analysis
+
+### System Architecture
+<div align="center">
+  <img src="docs/images/screenshots/architecture.png" width="800" alt="System Architecture"/>
+  <p><em>High-level system architecture diagram</em></p>
+</div>
+
+## 📦 Installation Guide
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/Health-AI-Agent.git
+cd Health-AI-Agent
+```
+
+2. Install dependencies:
+```bash
+# Install frontend dependencies
+cd client
+npm install
+
+# Install backend dependencies
+cd ../server
+npm install
+```
+
+3. Set up environment variables:
+```bash
+# Frontend (.env)
+REACT_APP_API_URL=your_api_url
+REACT_APP_AI_KEY=your_ai_key
+
+# Backend (.env)
+DATABASE_URL=your_database_url
+REDIS_URL=your_redis_url
+JWT_SECRET=your_jwt_secret
+```

@@ -11,13 +11,14 @@ import {
   ArrowRight,
   Bell
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@contexts/AuthContext';
 import { usePatient } from '@contexts/PatientContext';
 import { useNotifications } from '@contexts/NotificationContext';
 
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, isNewUser } = useAuth();
   const { patient, isLoading: patientLoading } = usePatient();
   const { notifications } = useNotifications();
 
@@ -134,11 +135,13 @@ const DashboardPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold mb-2">
-                Welcome back, {user?.name}!
+                {isNewUser ? `Welcome to RAVUS AI, ${user?.name}!` : `Welcome back, ${user?.name}!`}
               </h1>
               <p className="text-primary-100">
                 {patient?.cancerType ? 
                   `Managing your ${patient.cancerType} treatment journey` : 
+                  isNewUser ?
+                  'Let\'s start your health journey together' :
                   'Let\'s take care of your health together'
                 }
               </p>
