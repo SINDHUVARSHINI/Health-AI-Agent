@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Client",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/client/node_modules/.bin/vite",
+      "args": ["--port", "3000"],
+      "cwd": "${workspaceFolder}/client",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Launch Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server/index.js",
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal"
+    }
+  ]
+} 
