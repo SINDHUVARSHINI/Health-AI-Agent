@@ -201,12 +201,13 @@ npm install
 
 3. Set up environment variables:
 ```bash
-# Frontend (.env)
-REACT_APP_API_URL=your_api_url
-REACT_APP_AI_KEY=your_ai_key
+# Server Configuration
+PORT="PORT_NO"
+NODE_ENV=development
 
-# Backend (.env)
-DATABASE_URL=your_database_url
-REDIS_URL=your_redis_url
-JWT_SECRET=your_jwt_secret
+# MongoDB Configuration
+MONGODB_URI="MONGO_DB_URI_HERE"
+# OpenAI Configuration (optional - will use fallback responses if not set)
+GOOGLE_API_KEY="GOOGLE_API_KEY_HERE"
+
 ```
