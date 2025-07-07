@@ -144,9 +144,6 @@ Our authentication system prioritizes both security and user experience:
 4. Configure notification preferences
 
 ### 2. Daily Health Monitoring
-<div align="center">
-  <lth tracking and AI analysis</em></p>
-</div>
 
 1. Log daily symptoms
 2. Record medication intake
@@ -155,8 +152,6 @@ Our authentication system prioritizes both security and user experience:
 
 ### 3. AI Analysis & Support
 <div align="center">
-
-  <p><em>Advanced AI processing of health data</em></p>
 </div>
 
 1. Pattern recognition in symptoms
@@ -184,11 +179,6 @@ Our authentication system prioritizes both security and user experience:
   - TensorFlow for health predictions
   - Custom ML models for symptom analysis
 
-### System Architecture
-<div align="center">
- 
-  <p><em>High-level system architecture diagram</em></p>
-</div>
 
 ## 📦 Installation Guide
 
