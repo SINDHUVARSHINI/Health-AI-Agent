@@ -102,9 +102,9 @@ Our authentication system prioritizes both security and user experience:
 
 ### Symptom Tracking
 <div align="center">
-  <img src="docs/images/screenshots/SymptomTracker1.png" width="600" alt="Symptom Tracking 1"/>
+  <img src="docs/images/screenshots/Symptom1.png" width="600" alt="Symptom Tracking 1"/>
   <p><em>Symptom Tracking - View 1</em></p>
-  <img src="docs/images/screenshots/SymptomTracker2.png" width="600" alt="Symptom Tracking 2"/>
+  <img src="docs/images/screenshots/Symptom2.png" width="600" alt="Symptom Tracking 2"/>
   <p><em>Symptom Tracking - View 2</em></p>
 </div>
 
