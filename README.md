@@ -31,7 +31,7 @@
 
 ### Secure Sign-In Process
 <div align="center">
-  <img src="docs/images/screenshots/signin.png" width="600" alt="RAVUS AI Sign In"/>
+  <img src="docs/images/screenshots/Signin.png" width="600" alt="RAVUS AI Sign In"/>
   <p><em>Clean and secure authentication interface</em></p>
 </div>
 
@@ -53,8 +53,10 @@ Our authentication system prioritizes both security and user experience:
 
 ### Dashboard & Health Overview
 <div align="center">
-  <img src="docs/images/screenshots/dashboard.png" width="800" alt="RAVUS AI Dashboard"/>
-  <p><em>Comprehensive health dashboard with quick actions and real-time metrics</em></p>
+  <img src="docs/images/screenshots/dashboard1.png" width="800" alt="RAVUS AI Dashboard 1"/>
+  <p><em>Comprehensive health dashboard (variant 1)</em></p>
+  <img src="docs/images/screenshots/dashboard2.png" width="800" alt="RAVUS AI Dashboard 2"/>
+  <p><em>Comprehensive health dashboard (variant 2)</em></p>
 </div>
 
 #### Quick Actions
@@ -83,8 +85,14 @@ Our authentication system prioritizes both security and user experience:
 
 ### AI Health Assistant
 <div align="center">
-  <img src="docs/images/screenshots/ai-chat.png" width="600" alt="AI Chat Interface"/>
-  <p><em>Intelligent conversation interface for health guidance and support</em></p>
+  <img src="docs/images/screenshots/AI Assistant1.png" width="600" alt="AI Chat Interface 1"/>
+  <p><em>AI Assistant - Chat Interface 1</em></p>
+  <img src="docs/images/screenshots/AI Assistant2.png" width="600" alt="AI Chat Interface 2"/>
+  <p><em>AI Assistant - Chat Interface 2</em></p>
+  <img src="docs/images/screenshots/AI Assistant3.png" width="600" alt="AI Chat Interface 3"/>
+  <p><em>AI Assistant - Chat Interface 3</em></p>
+  <img src="docs/images/screenshots/AI Assistant4.png" width="600" alt="AI Chat Interface 4"/>
+  <p><em>AI Assistant - Chat Interface 4</em></p>
 </div>
 
 - **24/7 Health Support**: Get immediate responses to health concerns
@@ -94,8 +102,10 @@ Our authentication system prioritizes both security and user experience:
 
 ### Symptom Tracking
 <div align="center">
-  <img src="docs/images/screenshots/symptom-tracking.png" width="600" alt="Symptom Tracking"/>
-  <p><em>Detailed symptom monitoring and analysis dashboard</em></p>
+  <img src="docs/images/screenshots/SymptomTracker1.png" width="600" alt="Symptom Tracking 1"/>
+  <p><em>Symptom Tracking - View 1</em></p>
+  <img src="docs/images/screenshots/SymptomTracker2.png" width="600" alt="Symptom Tracking 2"/>
+  <p><em>Symptom Tracking - View 2</em></p>
 </div>
 
 - **Real-time Logging**: Easy-to-use interface for recording symptoms
@@ -105,7 +115,7 @@ Our authentication system prioritizes both security and user experience:
 
 ### Health Metrics Dashboard
 <div align="center">
-  <img src="docs/images/screenshots/health-metrics.png" width="600" alt="Health Metrics"/>
+  <img src="docs/images/screenshots/HealthOverview.png" width="600" alt="Health Overview"/>
   <p><em>Comprehensive health data visualization</em></p>
 </div>
 
@@ -114,11 +124,17 @@ Our authentication system prioritizes both security and user experience:
 - **Medication Adherence**: Track medication schedules and compliance
 - **Custom Metrics**: Personalized tracking of relevant health factors
 
+### Medication Management
+<div align="center">
+  <img src="docs/images/screenshots/Medication1.png" width="600" alt="Medication Management"/>
+  <p><em>Medication management interface</em></p>
+</div>
+
 ## 🔄 How It Works
 
 ### 1. User Onboarding
 <div align="center">
-  <img src="docs/images/screenshots/onboarding.png" width="600" alt="Onboarding Process"/>
+  <img src="docs/images/screenshots/Onboarding.png" width="600" alt="Onboarding Process"/>
   <p><em>Simple and secure account creation and profile setup</em></p>
 </div>
 
@@ -129,8 +145,7 @@ Our authentication system prioritizes both security and user experience:
 
 ### 2. Daily Health Monitoring
 <div align="center">
-  <img src="docs/images/screenshots/daily-monitoring.png" width="600" alt="Daily Monitoring"/>
-  <p><em>Daily health tracking and AI analysis</em></p>
+  <lth tracking and AI analysis</em></p>
 </div>
 
 1. Log daily symptoms
@@ -140,7 +155,7 @@ Our authentication system prioritizes both security and user experience:
 
 ### 3. AI Analysis & Support
 <div align="center">
-  <img src="docs/images/screenshots/ai-analysis.png" width="600" alt="AI Analysis"/>
+
   <p><em>Advanced AI processing of health data</em></p>
 </div>
 
@@ -171,7 +186,7 @@ Our authentication system prioritizes both security and user experience:
 
 ### System Architecture
 <div align="center">
-  <img src="docs/images/screenshots/architecture.png" width="800" alt="System Architecture"/>
+ 
   <p><em>High-level system architecture diagram</em></p>
 </div>
 
